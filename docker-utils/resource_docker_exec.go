@@ -99,9 +99,7 @@ func resourceDockerExec() *schema.Resource {
 func resourceDockerExecCreate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	client := i.(*ProviderConfig).DockerClient
 
-	var container string
-	container = data.Get("container_name").(string)
-
+	var container = data.Get("container_name").(string)
 	retContainer, err := client.ContainerInspect(ctx, container)
 	if err != nil {
 		return diag.Errorf("container :%s  not found", container)
@@ -152,8 +150,7 @@ func resourceDockerExecCreate(ctx context.Context, data *schema.ResourceData, i 
 func resourceDockerExecUpdate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	client := i.(*ProviderConfig).DockerClient
 
-	var container string
-	container = data.Get("container_name").(string)
+	var container = data.Get("container_name").(string)
 
 	retContainer, err := client.ContainerInspect(ctx, container)
 	if err != nil {
@@ -206,9 +203,7 @@ func resourceDockerExecUpdate(ctx context.Context, data *schema.ResourceData, i 
 func resourceDockerExecDelete(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 
 	client := i.(*ProviderConfig).DockerClient
-	var container string
-	container = data.Get("container_name").(string)
-
+	var container = data.Get("container_name").(string)
 	retContainer, err := client.ContainerInspect(ctx, container)
 	if err != nil {
 		return diag.Errorf("container :%s  not found", container)
@@ -249,8 +244,7 @@ func resourceDockerExecDelete(ctx context.Context, data *schema.ResourceData, i 
 }
 
 func resourceDockerExecRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	diags = nil
+	var diags diag.Diagnostics = nil
 	return diags
 }
 func importExecState(ctx context.Context, data *schema.ResourceData, i interface{}) ([]*schema.ResourceData, error) {

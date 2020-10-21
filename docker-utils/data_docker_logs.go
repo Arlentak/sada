@@ -61,15 +61,13 @@ func dataSourceLogs() *schema.Resource {
 			},
 		},
 	}
-
 }
 
 func dataSourceLogsRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	client := i.(*ProviderConfig).DockerClient
 
-	var container string
-	container = data.Get("container_name").(string)
+	var container = data.Get("container_name").(string)
 	var logsOptions types.ContainerLogsOptions
 	retContainer, err := client.ContainerInspect(ctx, container)
 	if err != nil {

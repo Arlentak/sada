@@ -82,8 +82,7 @@ func dataSourceInspect() *schema.Resource {
 func dataSourceInspectRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	client := i.(*ProviderConfig).DockerClient
-	var container string
-	container = data.Get("container_name").(string)
+	var container = data.Get("container_name").(string)
 	retContainer, err := client.ContainerInspect(ctx, container)
 	if err != nil {
 		return diag.FromErr(err)
@@ -134,5 +133,4 @@ func populateNetwork(data *types.NetworkSettings, network string) map[string]int
 		"ip_address":   data.Networks[network].IPAddress,
 		"gateway":      data.Networks[network].Gateway,
 	}
-
 }
