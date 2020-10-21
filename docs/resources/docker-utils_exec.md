@@ -30,15 +30,3 @@ The following arguments are supported:
   * `working_dir` - (Optional)  `string` Working directory inside the container (default /)
   * `user` - (Optional) `string` Username or UID (format: <name|uid>[:<group|gid>]) (default root)
 
-## Attributes Reference
-
-In addition to all arguments above, the following attributes are exported:
-* `key` - The API Key
-
-## Import
-
-Algolia API Key can be imported using the `key`
-
-```shell
-terraform import algolia_api_key.example {my algolia api key}
-```
