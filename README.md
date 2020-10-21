@@ -1,6 +1,6 @@
 # terraform-provider-docker-utils
 
-This repository is a Algolia provider for [Terraform](https://www.terraform.io).
+This repository is docker-utils provider for [Terraform](https://www.terraform.io).
 
 ## Developer
 - Montassar bouajina (bouagina.montassar@gmail.com)
