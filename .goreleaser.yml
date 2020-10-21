@@ -9,7 +9,6 @@ builds:
       # goreleaser does not work with CGO, it could also complicate
       # usage by users in CI/CD systems like Terraform Cloud where
       # they are unable to install libraries.
-      - GPG_FINGERPRINT=B97352707592B669
       - CGO_ENABLED=0
     mod_timestamp: '{{ .CommitTimestamp }}'
     flags:
@@ -43,7 +42,7 @@ signs:
       # need to pass the batch flag to indicate its not interactive.
       - "--batch"
       - "--local-user"
-      - "{{ .Env.GPG_FINGERPRINT }}" # set this environment variable for your signing key
+      - "B97352707592B669" # set this environment variable for your signing key
       - "--output"
       - "${signature}"
       - "--detach-sign"
