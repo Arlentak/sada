@@ -100,7 +100,7 @@ func dataSourceLogsRead(ctx context.Context, data *schema.ResourceData, i interf
 
 	logs, err := client.ContainerLogs(ctx, retContainer.ID, logsOptions)
 	if err != nil {
-		return diag.Errorf("can't get logs", err)
+		return diag.Errorf("can't get logs %s", err)
 	}
 	var bodyBytes []byte
 	if logs != nil {
