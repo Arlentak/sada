@@ -2,6 +2,7 @@ package docker_utils
 
 import (
 	"context"
+
 	"github.com/docker/docker/api/types"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"

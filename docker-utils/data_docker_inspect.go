@@ -2,6 +2,7 @@ package docker_utils
 
 import (
 	"context"
+
 	"github.com/docker/docker/api/types"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -76,7 +77,6 @@ func dataSourceInspect() *schema.Resource {
 			},
 		},
 	}
-
 }
 
 func dataSourceInspectRead(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
@@ -129,7 +129,6 @@ func populateMount(mounts types.MountPoint) map[string]interface{} {
 	}
 }
 func populateNetwork(data *types.NetworkSettings, network string) map[string]interface{} {
-
 	return map[string]interface{}{
 		"network_name": network,
 		"ip_address":   data.Networks[network].IPAddress,

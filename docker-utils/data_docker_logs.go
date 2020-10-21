@@ -2,13 +2,14 @@ package docker_utils
 
 import (
 	"context"
-	"github.com/docker/docker/api/types"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"io/ioutil"
 	"strconv"
 	"time"
 	"unicode/utf8"
+
+	"github.com/docker/docker/api/types"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func dataSourceLogs() *schema.Resource {
@@ -100,7 +101,9 @@ func dataSourceLogsRead(ctx context.Context, data *schema.ResourceData, i interf
 	logsOptions.Timestamps = data.Get("timestamps").(bool)
 
 	logs, err := client.ContainerLogs(ctx, retContainer.ID, logsOptions)
-
+	if err != nil {
+		return diag.Errorf("can't get logs", err)
+	}
 	var bodyBytes []byte
 	if logs != nil {
 		bodyBytes, _ = ioutil.ReadAll(logs)

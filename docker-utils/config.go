@@ -5,14 +5,15 @@ import (
 	"crypto/x509"
 	"errors"
 	"fmt"
-	"github.com/docker/cli/cli/connhelper"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/client"
 	"net"
 	"net/http"
 	"path/filepath"
 	"runtime"
 	"time"
+
+	"github.com/docker/cli/cli/connhelper"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
 )
 
 // Config is the structure that stores the configuration to talk to a
