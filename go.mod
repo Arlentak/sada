@@ -8,7 +8,6 @@ require (
 	github.com/docker/cli v0.0.0-20200303215952-eb310fca4956 // v19.03.8
 	github.com/docker/distribution v0.0.0-20180522175653-f0cc92778478 // indirect
 	github.com/docker/docker v0.7.3-0.20190525203055-f25e0c6f3093
-	github.com/docker/docker-credential-helpers v0.6.3 // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/gogo/protobuf v1.3.1 // indirect
