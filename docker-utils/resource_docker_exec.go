@@ -113,38 +113,41 @@ func resourceDockerExecCreate(ctx context.Context, data *schema.ResourceData, i 
 	listOfCommands := make([]string, len(command), cap(command))
 
 	listOfEnv := make([]string, len(environment), cap(environment))
+	if len(command) > 0 {
+		if len(environment) > 0 {
+			for i, v := range environment {
+				listOfEnv[i] = v.(string)
+			}
+		}
+		for i, v := range command {
+			listOfCommands[i] = v.(string)
+		}
+		config.Cmd = listOfCommands
+		config.Env = listOfEnv
 
-	for i, v := range command {
-		listOfCommands[i] = v.(string)
-	}
-	for i, v := range environment {
-		listOfEnv[i] = v.(string)
+		config.Detach = data.Get("detach").(bool)
+		config.Tty = data.Get("tty").(bool)
+		config.Privileged = data.Get("privileged").(bool)
+		config.WorkingDir = data.Get("working_dir").(string)
+		config.User = data.Get("user").(string)
+		config.AttachStderr = data.Get("attach_stderr").(bool)
+		config.AttachStdin = data.Get("attach_stdin").(bool)
+		config.AttachStdout = data.Get("attach_stdout").(bool)
+
+		execId, err := client.ContainerExecCreate(ctx, retContainer.ID, config)
+		if err != nil {
+			return diag.Errorf("Could not create the docker exec err: %s", err)
+		}
+		data.SetId(execId.ID)
+		var checkConfig types.ExecStartCheck
+		checkConfig.Detach = true
+		checkConfig.Tty = true
+		err = client.ContainerExecStart(ctx, execId.ID, checkConfig)
+		if err != nil {
+			return diag.Errorf("Could not start the docker exec err")
+		}
 	}
 
-	config.Cmd = listOfCommands
-	config.Env = listOfEnv
-
-	config.Detach = data.Get("detach").(bool)
-	config.Tty = data.Get("tty").(bool)
-	config.Privileged = data.Get("privileged").(bool)
-	config.WorkingDir = data.Get("working_dir").(string)
-	config.User = data.Get("user").(string)
-	config.AttachStderr = data.Get("attach_stderr").(bool)
-	config.AttachStdin = data.Get("attach_stdin").(bool)
-	config.AttachStdout = data.Get("attach_stdout").(bool)
-
-	execId, err := client.ContainerExecCreate(ctx, retContainer.ID, config)
-	if err != nil {
-		return diag.Errorf("Could not create the docker exec err: %s", err)
-	}
-	data.SetId(execId.ID)
-	var checkConfig types.ExecStartCheck
-	checkConfig.Detach = true
-	checkConfig.Tty = true
-	err = client.ContainerExecStart(ctx, execId.ID, checkConfig)
-	if err != nil {
-		return diag.Errorf("Could not start the docker exec err")
-	}
 	return resourceDockerExecRead(ctx, data, i)
 }
 func resourceDockerExecUpdate(ctx context.Context, data *schema.ResourceData, i interface{}) diag.Diagnostics {
@@ -166,37 +169,44 @@ func resourceDockerExecUpdate(ctx context.Context, data *schema.ResourceData, i 
 
 	listOfEnv := make([]string, len(environment), cap(environment))
 
-	for i, v := range command {
-		listOfCommands[i] = v.(string)
-	}
-	for i, v := range environment {
-		listOfEnv[i] = v.(string)
+	if len(command) > 0 {
+		if len(environment) > 0 {
+			for i, v := range environment {
+				listOfEnv[i] = v.(string)
+			}
+		}
+		for i, v := range command {
+			listOfCommands[i] = v.(string)
+		}
+		config.Cmd = listOfCommands
+		config.Env = listOfEnv
+
+		config.Detach = data.Get("detach").(bool)
+		config.Tty = data.Get("tty").(bool)
+		config.Privileged = data.Get("privileged").(bool)
+		config.WorkingDir = data.Get("working_dir").(string)
+		config.User = data.Get("user").(string)
+		config.AttachStderr = data.Get("attach_stderr").(bool)
+		config.AttachStdin = data.Get("attach_stdin").(bool)
+		config.AttachStdout = data.Get("attach_stdout").(bool)
+
+		execId, err := client.ContainerExecCreate(ctx, retContainer.ID, config)
+		if err != nil {
+			return diag.Errorf("Could not create the docker exec err: %s", err)
+		}
+		data.SetId(execId.ID)
+		var checkConfig types.ExecStartCheck
+		checkConfig.Detach = true
+		checkConfig.Tty = true
+		err = client.ContainerExecStart(ctx, execId.ID, checkConfig)
+		if err != nil {
+			return diag.Errorf("Could not start the docker exec err")
+		}
+
 	}
 
-	config.Cmd = listOfCommands
-	config.Env = listOfEnv
 
-	config.Detach = data.Get("detach").(bool)
-	config.Tty = data.Get("tty").(bool)
-	config.Privileged = data.Get("privileged").(bool)
-	config.WorkingDir = data.Get("working_dir").(string)
-	config.User = data.Get("user").(string)
-	config.AttachStderr = data.Get("attach_stderr").(bool)
-	config.AttachStdin = data.Get("attach_stdin").(bool)
-	config.AttachStdout = data.Get("attach_stdout").(bool)
 
-	execId, err := client.ContainerExecCreate(ctx, retContainer.ID, config)
-	if err != nil {
-		return diag.Errorf("Could not create the docker exec err: %s", err)
-	}
-	data.SetId(execId.ID)
-	var checkConfig types.ExecStartCheck
-	checkConfig.Detach = true
-	checkConfig.Tty = true
-	err = client.ContainerExecStart(ctx, execId.ID, checkConfig)
-	if err != nil {
-		return diag.Errorf("Could not start the docker exec err")
-	}
 	return resourceDockerExecRead(ctx, data, i)
 }
 
@@ -219,25 +229,31 @@ func resourceDockerExecDelete(ctx context.Context, data *schema.ResourceData, i 
 	var environment = data.Get("destroy_environment").([]interface{})
 	listOfCommands := make([]string, len(command), cap(command))
 	listOfEnvironment := make([]string, len(environment), cap(environment))
-	for i, v := range command {
-		listOfCommands[i] = v.(string)
-	}
-	for i, v := range environment {
-		listOfEnvironment[i] = v.(string)
-	}
-	config.Cmd = listOfCommands
-	config.Env = listOfEnvironment
 
-	execId, err := client.ContainerExecCreate(ctx, retContainer.ID, config)
-	if err != nil {
-		return diag.Errorf("Could not destroy the docker exec err: %s", err)
-	}
-	var checkConfig types.ExecStartCheck
-	checkConfig.Detach = false
-	checkConfig.Tty = false
-	err = client.ContainerExecStart(ctx, execId.ID, checkConfig)
-	if err != nil {
-		return diag.Errorf("Could not destroy the docker exec verify destroy commands")
+
+
+	if len(command) > 0 {
+		if len(environment) > 0 {
+			for i, v := range environment {
+				listOfEnvironment[i] = v.(string)
+			}
+		}
+		for i, v := range command {
+			listOfCommands[i] = v.(string)
+		}
+		config.Cmd = listOfCommands
+		config.Env = listOfEnvironment
+		execId, err := client.ContainerExecCreate(ctx, retContainer.ID, config)
+		if err != nil {
+			return diag.Errorf("Could not destroy the docker exec err: %s", err)
+		}
+		var checkConfig types.ExecStartCheck
+		checkConfig.Detach = false
+		checkConfig.Tty = false
+		err = client.ContainerExecStart(ctx, execId.ID, checkConfig)
+		if err != nil {
+			return diag.Errorf("Could not destroy the docker exec verify destroy commands")
+		}
 	}
 	return resourceDockerExecRead(ctx, data, i)
 
