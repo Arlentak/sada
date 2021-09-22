@@ -72,6 +72,10 @@ func dataSourceInspect() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"ip_prefixlen": {
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -132,5 +136,6 @@ func populateNetwork(data *types.NetworkSettings, network string) map[string]int
 		"network_name": network,
 		"ip_address":   data.Networks[network].IPAddress,
 		"gateway":      data.Networks[network].Gateway,
+		"ip_prefixlen": data.Networks[network].IPPrefixLen,
 	}
 }
