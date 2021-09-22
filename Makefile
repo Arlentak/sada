@@ -12,7 +12,7 @@ NAMESPACE=Kaginari
 NAME=docker-utils
 VERSION=9.9.9
 ## on linux base os
-TERRAFORM_PLUGINS_DIRECTORY=/home/monta/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+TERRAFORM_PLUGINS_DIRECTORY=${HOME}/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
 
 
 install:
