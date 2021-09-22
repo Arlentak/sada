@@ -1,10 +1,12 @@
 # Docker-utils Provider
 
-The Docker-utils Provider is used to interact with the many resources supported by Docker but not provided in docker provider. 
-The provider needs to be configured with the proper host before it can be used.
-Use the navigation to the left to read about the available resources.
+The Docker-utils Provider is used to interact with the many resources
+supported by Docker but not provided in docker provider. The provider needs
+to be configured with the proper host before it can be used. Use the
+navigation to the left to read about the available resources.
 
 ## Example Usage
+
 ```hcl
 terraform {
   required_version = ">= 0.13"
@@ -65,11 +67,11 @@ output "logs" {
   value = data.docker-utils_logs.example.logs
 }
 
-# List of container mounts 
+# List of container mounts
 output "container_mounts" {
   value = data.docker-utils_inspect.example.mounts
 }
-# List of container env variables 
+# List of container env variables
 output "container_environment" {
   value = data.docker-utils_inspect.example.environment
 }
