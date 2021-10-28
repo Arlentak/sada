@@ -72,6 +72,10 @@ func dataSourceInspect() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"ip_prefixlen": {
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -83,11 +87,8 @@ func dataSourceInspectRead(ctx context.Context, data *schema.ResourceData, i int
 	var diags diag.Diagnostics
 	client := i.(*ProviderConfig).DockerClient
 	var container = data.Get("container_name").(string)
-	retContainer, err := client.ContainerInspect(ctx, container)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-	res, err := client.ContainerInspect(ctx, retContainer.ID)
+
+	res, err := client.ContainerInspect(ctx, container)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -112,7 +113,7 @@ func dataSourceInspectRead(ctx context.Context, data *schema.ResourceData, i int
 		return diag.FromErr(err)
 	}
 
-	data.SetId(retContainer.ID)
+	data.SetId(res.ID)
 
 	return diags
 }
@@ -132,5 +133,6 @@ func populateNetwork(data *types.NetworkSettings, network string) map[string]int
 		"network_name": network,
 		"ip_address":   data.Networks[network].IPAddress,
 		"gateway":      data.Networks[network].Gateway,
+		"ip_prefixlen": data.Networks[network].IPPrefixLen,
 	}
 }

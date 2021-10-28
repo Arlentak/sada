@@ -3,7 +3,9 @@
 This repository is docker-utils provider for [Terraform](https://www.terraform.io).
 
 ## Developer
+
 - Montassar bouajina (bouagina.montassar@gmail.com)
+
 ### Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13
@@ -15,8 +17,8 @@ This repository is docker-utils provider for [Terraform](https://www.terraform.i
 1. Enter the repository directory
 1. Build the provider using the `make install` command:
 
-````bash
+```bash
 git clone https://github.com/Kaginari/terraform-provider-docker-utils
 cd terraform-docker-utils
 make install
-````
+```

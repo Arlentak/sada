@@ -1,4 +1,4 @@
-TERRAFORM_PLUGINS_DIRECTORY=/home/monta/.terraform.d/plugins
+TERRAFORM_PLUGINS_DIRECTORY=${HOME}/.terraform.d/plugins
 
 init:
 	cd
