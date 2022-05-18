@@ -4,7 +4,7 @@ terraform {
   required_providers {
     docker-utils = {
       source = "Kaginari/docker-utils"
-      version = "0.0.5"
+      version = "9.9.9"
     }
 
   }
@@ -25,7 +25,9 @@ resource "docker-utils_exec" "create_ssl" {
   attach_stdout = false
   detach  = true
   tty  = true
-  commands = ["/bin/bash","-c","cat Makefile"]
+  commands = ["/bin/bash","-c","mkdir example && touch example/$DOMAIN.txt"]
+  environment = ["DOMAIN=sonarqube.kaginari.com"]
+  destroy_commands = ["/bin/bash","-c","rm -rf example"]
 }
 
 //resource "docker-utils_exec" "exec" {
